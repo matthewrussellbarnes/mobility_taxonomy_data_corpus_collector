@@ -1,6 +1,7 @@
 import os
 
 import networks_skewed
+import snap_stanford
 
 dataset_path = os.path.join(os.getcwd(), 'datasets')
 if not os.path.exists(dataset_path):
@@ -20,9 +21,13 @@ networks_skewed.dl_csv(
 
 # classical_piano https://osf.io/jvzxg/
 
-# CollegeMsg http://snap.stanford.edu/data/CollegeMsg.html
+# CollegeMsg
+snap_stanford.dl_csv(
+    'http://snap.stanford.edu/data/CollegeMsg.html', dataset_path)
 
-# email-Eu-core-temporal http://snap.stanford.edu/data/email-Eu-core-temporal.html
+# email-Eu-core-temporal
+snap_stanford.dl_csv(
+    'http://snap.stanford.edu/data/email-Eu-core-temporal.html', dataset_path)
 
 # eu_procurements https://zenodo.org/record/3537986#.Xis4mC2ZNGV
 
@@ -46,9 +51,10 @@ networks_skewed.dl_csv(
 networks_skewed.dl_csv(
     'https://networks.skewed.de/net/scotus_majority', dataset_path)
 
-# soc-redditHyperlinks-body http://snap.stanford.edu/data/soc-RedditHyperlinks.html
-
-# soc-redditHyperlinks-title http://snap.stanford.edu/data/soc-RedditHyperlinks.html
+# soc-redditHyperlinks-body
+# soc-redditHyperlinks-title
+snap_stanford.dl_csv(
+    'http://snap.stanford.edu/data/soc-RedditHyperlinks.html', dataset_path)
 
 # sp_hospital
 networks_skewed.dl_csv(
@@ -71,12 +77,20 @@ networks_skewed.dl_csv(
     'https://networks.skewed.de/net/sp_primary_school', dataset_path)
 
 # ax_askubuntu http://snap.stanford.edu/data/sx-askubuntu.html
+snap_stanford.dl_csv(
+    'http://snap.stanford.edu/data/soc-RedditHyperlinks.html', dataset_path)
 
-# sx-mathoverflow http://snap.stanford.edu/data/sx-mathoverflow.html
+# sx-mathoverflow
+snap_stanford.dl_csv(
+    'http://snap.stanford.edu/data/sx-mathoverflow.html', dataset_path)
 
-# sx-stackoverflow http://snap.stanford.edu/data/sx-stackoverflow.html
+# sx-stackoverflow
+snap_stanford.dl_csv(
+    'http://snap.stanford.edu/data/sx-stackoverflow.html', dataset_path)
 
-# sx-superuser http://snap.stanford.edu/data/sx-superuser.html
+# sx-superuser
+snap_stanford.dl_csv(
+    'http://snap.stanford.edu/data/sx-superuser.html', dataset_path)
 
 # ucla_net https://github.com/richardclegg/FETA2/tree/master/data
 
@@ -85,3 +99,5 @@ networks_skewed.dl_csv(
     'https://networks.skewed.de/net/us_air_traffic', dataset_path)
 
 # wiki-talk-temporal
+snap_stanford.dl_csv(
+    'http://snap.stanford.edu/data/wiki-talk-temporal.html', dataset_path)
