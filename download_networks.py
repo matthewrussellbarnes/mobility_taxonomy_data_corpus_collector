@@ -1,4 +1,5 @@
 import os
+import wget
 
 import networks_skewed
 import snap_stanford
@@ -19,7 +20,9 @@ networks_skewed.dl_csv(
 networks_skewed.dl_csv(
     'https://networks.skewed.de/net/us_patents', dataset_path)
 
-# classical_piano https://osf.io/jvzxg/
+# classical_piano
+wget.download('https://osf.io/jpwtn/download', out=os.path.join(
+    dataset_path, 'classical_piano.gexf'))
 
 # CollegeMsg
 snap_stanford.dl_csv(
@@ -29,7 +32,9 @@ snap_stanford.dl_csv(
 snap_stanford.dl_csv(
     'http://snap.stanford.edu/data/email-Eu-core-temporal.html', dataset_path)
 
-# eu_procurements https://zenodo.org/record/3537986#.Xis4mC2ZNGV
+# eu_procurements
+wget.download('https://zenodo.org/record/3537986/files/data.zip?download=1', out=os.path.join(
+    dataset_path, 'eu_procurements.zip'))
 
 # facebook_wall
 networks_skewed.dl_csv(

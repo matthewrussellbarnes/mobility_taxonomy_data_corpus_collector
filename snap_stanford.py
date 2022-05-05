@@ -28,7 +28,3 @@ def dl_csv(my_url, dest_path):
         except:
             print(" \n \n Unable to Download A File \n")
     print('\n')
-
-
-dl_csv(
-    'http://snap.stanford.edu/data/wiki-talk-temporal.html', os.path.join(os.getcwd(), 'datasets'))
