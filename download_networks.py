@@ -2,6 +2,7 @@ import os
 
 import networks_skewed
 import snap_stanford
+import github
 import utilities
 
 dataset_path = os.path.join(os.getcwd(), 'datasets')
@@ -45,8 +46,8 @@ networks_skewed.download_files(
 # luke_bible https://ajholanda.github.io/charnet/
 
 # phd_exchange
-utilities.wget_links(['https://github.com/taylordr/Temporal_Eigenvector_Centrality/raw/master/Temporal_Eigenvector_Centrality/PhD%20Exchange%20Network%20Data/PhD_exchange.txt'],
-                     dataset_path)
+github.download_files('https://github.com/taylordr/Temporal_Eigenvector_Centrality/blob/master/Temporal_Eigenvector_Centrality/PhD%20Exchange%20Network%20Data/PhD_exchange.txt',
+                      dataset_path)
 
 
 # programming_language_influence
@@ -58,8 +59,8 @@ utilities.wget_links(['http://vlado.fmf.uni-lj.si/pub/networks/data/CRA/DaysAll.
                      dataset_path, file_name='reuters_terror_news.zip')
 
 # route_net
-utilities.wget_links(['https://github.com/richardclegg/FETA2/blob/master/data/route_net.txt'],
-                     dataset_path)
+github.download_files('https://github.com/richardclegg/FETA2/blob/master/data/route_net.txt',
+                      dataset_path)
 
 # SCOTUS_majority
 networks_skewed.download_files(
@@ -107,8 +108,8 @@ snap_stanford.download_files(
     'http://snap.stanford.edu/data/sx-superuser.html', dataset_path, specific_file='sx-superuser.txt')
 
 # ucla_net
-utilities.wget_links(['https://github.com/richardclegg/FETA2/blob/master/data/ucla_net.txt'],
-                     dataset_path)
+github.download_files('https://github.com/richardclegg/FETA2/blob/master/data/ucla_net.txt',
+                      dataset_path)
 
 # us_air_traffic
 networks_skewed.download_files(
