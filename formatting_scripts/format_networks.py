@@ -3,7 +3,7 @@ import os
 import utilities
 
 import classical_piano
-import eu_procurements
+import reuters_terror_news
 
 if not os.path.exists(utilities.dataset_path):
     os.mkdir(utilities.dataset_path)
@@ -39,7 +39,8 @@ utilities.format_headerless_dataset(
 # eu_procurements
 fpath = utilities.extract_dataset(os.path.join(
     utilities.dataset_path, 'eu_procurements.zip'), specific_file='data/contracts.csv')
-eu_procurements.format_dataset(fpath)
+utilities.format_dataset(
+    fpath, columns=['issuer_id_final', 'winner_id_final', 'date_dispatched'], fname='eu_procurements.csv', delimiter=',')
 
 # facebook_wall
 fpath = utilities.extract_dataset(os.path.join(
@@ -56,12 +57,19 @@ utilities.format_dataset(
 # programming_language_influence
 
 # reuters_terror_news
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'reuters_terror_news.zip'), specific_file='daysAll.net')
+reuters_terror_news.format_dataset(fpath)
 
 # route_net
+utilities.format_headerless_dataset(
+    os.path.join(utilities.dataset_path, 'route_net.txt'), 3, 0, 1, 2, fname='route_net.csv', delimiter=' ')
 
 # SCOTUS_majority
 
 # soc-redditHyperlinks-body
+utilities.format_dataset(
+    os.path.join(utilities.dataset_path, 'soc-redditHyperlinks-body.tsv'), columns=['SOURCE_SUBREDDIT', 'TARGET_SUBREDDIT', 'TIMESTAMP'], fname='soc-redditHyperlinks-body.csv', delimiter='\t')
 
 # soc-redditHyperlinks-title
 
@@ -84,6 +92,8 @@ utilities.format_dataset(
 # sx-superuser
 
 # ucla_net
+utilities.format_headerless_dataset(
+    os.path.join(utilities.dataset_path, 'ucla_net.txt'), 3, 0, 1, 2, fname='ucla_net.csv', delimiter=' ')
 
 # us_air_traffic
 

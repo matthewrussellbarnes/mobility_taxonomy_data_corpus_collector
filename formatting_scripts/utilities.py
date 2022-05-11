@@ -23,12 +23,16 @@ def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None):
     else:
         raise Exception(f"No columns chosen")
 
+    if check_date(fdf[columns[2]]):
+        fdf[columns[2]] = (pd.to_datetime(fdf[columns[2]]) -
+                           pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
+
     fdf.sort_values(by=columns[2]).to_csv(os.path.join(dataset_path, f"{fname}"), columns=columns, header=[
         'n1', 'n2', 'creation_name'], index=False)
 
     delete_extracted_files(extracted_fpath)
 
-    print(fname, 'fomatted')
+    print(fname, 'formatted')
 
 
 def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, delimiter=' ', fname=None):
@@ -47,12 +51,17 @@ def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, deli
     names[ct_no] = columns[2]
 
     fdf = pd.read_csv(extracted_fpath, names=names, delimiter=delimiter)
+
+    if check_date(fdf[columns[2]]):
+        fdf[columns[2]] = (pd.to_datetime(fdf[columns[2]]) -
+                           pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
+
     fdf.sort_values(by='creation_time').to_csv(os.path.join(
         dataset_path, f"{fname}"), columns=columns, header=columns, index=False)
 
     delete_extracted_files(extracted_fpath)
 
-    print(fname, 'fomatted')
+    print(fname, 'formatted')
 
 #  ---------------------------------------
 
@@ -82,8 +91,16 @@ def extract_dataset(fpath, specific_file=None):
 
 def check_ext(fpath):
     fext = os.path.splitext(os.path.basename(fpath))[1]
-    if not fext in ['.csv', '.txt']:
+    if not fext in ['.csv', '.txt', '.tsv']:
         raise Exception(f"Formatting failed due to non-usable ext {fext}")
+
+
+def check_date(col):
+    try:
+        pd.to_datetime(col)
+        return True
+    except:
+        return False
 
 
 def delete_extracted_files(extracted_fpath):
@@ -91,5 +108,9 @@ def delete_extracted_files(extracted_fpath):
         print('deleted', extracted_fpath)
         os.remove(extracted_fpath)
     else:
-        print('deleted', os.path.dirname(extracted_fpath))
-        shutil.rmtree(os.path.dirname(extracted_fpath))
+        if os.path.dirname(os.path.dirname(extracted_fpath)) == dataset_path:
+            print('deleted', os.path.dirname(extracted_fpath))
+            shutil.rmtree(os.path.dirname(extracted_fpath))
+        else:
+            print('deleted', os.path.dirname(os.path.dirname(extracted_fpath)))
+            shutil.rmtree(os.path.dirname(os.path.dirname(extracted_fpath)))
