@@ -27,7 +27,6 @@ def format_dataset(extracted_fpath):
     fdf.sort_values(by='creation_time').to_csv(
         os.path.join(utilities.dataset_path, f"{fname}"), index=False)
 
-    print('deleted', os.path.dirname(os.path.dirname(extracted_fpath)))
-    shutil.rmtree(os.path.dirname(os.path.dirname(extracted_fpath)))
+    utilities.delete_extracted_files(extracted_fpath)
 
     print(fname, 'fomatted')
