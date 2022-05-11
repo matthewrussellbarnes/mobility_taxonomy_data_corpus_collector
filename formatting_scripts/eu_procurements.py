@@ -1,6 +1,4 @@
 import os
-import zipfile
-import gzip
 import shutil
 import pandas as pd
 
