@@ -22,6 +22,6 @@ def format_dataset(extracted_fpath):
         'n1', 'n2', 'creation_name'], index=False)
 
     print('deleted', os.path.dirname(os.path.dirname(extracted_fpath)))
-    # shutil.rmtree(os.path.dirname(os.path.dirname(extracted_fpath)))
+    shutil.rmtree(os.path.dirname(os.path.dirname(extracted_fpath)))
 
     print(fname, 'fomatted')

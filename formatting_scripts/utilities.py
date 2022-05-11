@@ -72,8 +72,8 @@ def extract_dataset(fpath, specific_file=None):
     if not os.path.exists(os.path.join(dataset_path, 'archive')):
         os.mkdir(os.path.join(dataset_path, 'archive'))
 
-    # shutil.move(fpath, os.path.join(
-    #     dataset_path, 'archive', os.path.basename(fpath)))
+    shutil.move(fpath, os.path.join(
+        dataset_path, 'archive', os.path.basename(fpath)))
 
     return os.path.join(dataset_path, f"{fname}/{specific_file}" if specific_file else fname)
 
@@ -89,7 +89,7 @@ def check_ext(fpath):
 def delete_extracted_files(extracted_fpath):
     if os.path.dirname(extracted_fpath) == dataset_path:
         print('deleted', extracted_fpath)
-        # os.remove(extracted_fpath)
+        os.remove(extracted_fpath)
     else:
         print('deleted', os.path.dirname(extracted_fpath))
-        # shutil.rmtree(os.path.dirname(extracted_fpath))
+        shutil.rmtree(os.path.dirname(extracted_fpath))
