@@ -23,7 +23,7 @@ def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None):
     else:
         raise Exception(f"No columns chosen")
 
-    if check_date(fdf[columns[2]]):
+    if '-' in str(fdf[columns[2]][0]):
         fdf[columns[2]] = (pd.to_datetime(fdf[columns[2]]) -
                            pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
 
@@ -52,7 +52,7 @@ def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, deli
 
     fdf = pd.read_csv(extracted_fpath, names=names, delimiter=delimiter)
 
-    if check_date(fdf[columns[2]]):
+    if '-' in str(fdf[columns[2]][0]):
         fdf[columns[2]] = (pd.to_datetime(fdf[columns[2]]) -
                            pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
 
@@ -93,14 +93,6 @@ def check_ext(fpath):
     fext = os.path.splitext(os.path.basename(fpath))[1]
     if not fext in ['.csv', '.txt', '.tsv']:
         raise Exception(f"Formatting failed due to non-usable ext {fext}")
-
-
-def check_date(col):
-    try:
-        pd.to_datetime(col)
-        return True
-    except:
-        return False
 
 
 def delete_extracted_files(extracted_fpath):

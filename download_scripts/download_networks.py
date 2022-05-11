@@ -90,7 +90,7 @@ networks_skewed.download_files(
 networks_skewed.download_files(
     'https://networks.skewed.de/net/sp_primary_school', dataset_path)
 
-# ax_askubuntu
+# sx-askubuntu
 snap_stanford.download_files(
     'http://snap.stanford.edu/data/sx-askubuntu.html', dataset_path, specific_file='sx-askubuntu.txt')
 

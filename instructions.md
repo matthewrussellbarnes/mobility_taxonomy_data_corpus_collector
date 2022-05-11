@@ -165,7 +165,7 @@ sp_primary_school
 
     (order by creation time)
 
-ax_askubuntu
+sx-askubuntu
 
 sx-mathoverflow
 

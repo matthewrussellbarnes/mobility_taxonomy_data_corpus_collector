@@ -72,24 +72,62 @@ utilities.format_dataset(
     os.path.join(utilities.dataset_path, 'soc-redditHyperlinks-body.tsv'), columns=['SOURCE_SUBREDDIT', 'TARGET_SUBREDDIT', 'TIMESTAMP'], fname='soc-redditHyperlinks-body.csv', delimiter='\t')
 
 # soc-redditHyperlinks-title
+utilities.format_dataset(
+    os.path.join(utilities.dataset_path, 'soc-redditHyperlinks-title.tsv'), columns=['SOURCE_SUBREDDIT', 'TARGET_SUBREDDIT', 'TIMESTAMP'], fname='soc-redditHyperlinks-title.csv', delimiter='\t')
 
 # sp_hospital
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sp_hospital.csv.zip'), specific_file='edges.csv')
+utilities.format_dataset(
+    fpath, columns=['# source', ' target', ' time'], fname='sp_hospital.csv', delimiter=',')
 
 # sp_hypertext_conference
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sp_hypertext_conference.csv.zip'), specific_file='edges.csv')
+utilities.format_dataset(
+    fpath, columns=['# source', ' target', ' time'], fname='sp_hypertext_conference.csv', delimiter=',')
 
 # sp_office
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sp_office.csv.zip'), specific_file='edges.csv')
+utilities.format_dataset(
+    fpath, columns=['# source', ' target', ' time'], fname='sp_office.csv', delimiter=',')
 
 # sp_infectious
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sp_infectious.csv.zip'), specific_file='edges.csv')
+utilities.format_dataset(
+    fpath, columns=['# source', ' target', ' time'], fname='sp_infectious.csv', delimiter=',')
 
 # sp_primary_school
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sp_primary_school.csv.zip'), specific_file='edges.csv')
+utilities.format_dataset(
+    fpath, columns=['# source', ' target', ' time'], fname='sp_primary_school.csv', delimiter=',')
 
-# ax_askubuntu
+# sx-askubuntu
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sx-askubuntu.txt.gz'))
+utilities.format_headerless_dataset(
+    fpath, 3, 0, 1, 2, fname='sx-askubuntu.csv', delimiter=' ')
 
 # sx-mathoverflow
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sx-mathoverflow.txt.gz'))
+utilities.format_headerless_dataset(
+    fpath, 3, 0, 1, 2, fname='sx-mathoverflow.csv', delimiter=' ')
 
 # sx-stackoverflow
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sx-stackoverflow.txt.gz'))
+utilities.format_headerless_dataset(
+    fpath, 3, 0, 1, 2, fname='sx-stackoverflow.csv', delimiter=' ')
 
 # sx-superuser
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'sx-superuser.txt.gz'))
+utilities.format_headerless_dataset(
+    fpath, 3, 0, 1, 2, fname='sx-superuser.csv', delimiter=' ')
 
 # ucla_net
 utilities.format_headerless_dataset(
@@ -98,3 +136,7 @@ utilities.format_headerless_dataset(
 # us_air_traffic
 
 # wiki-talk-temporal
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'wiki-talk-temporal.txt.gz'))
+utilities.format_headerless_dataset(
+    fpath, 3, 0, 1, 2, fname='wiki-talk-temporal.csv', delimiter=' ')
