@@ -5,7 +5,7 @@ import snap_stanford
 import github
 import utilities
 
-dataset_path = os.path.join(os.getcwd(), 'datasets')
+dataset_path = os.path.join(os.path.dirname(os.getcwd()), 'datasets')
 if not os.path.exists(dataset_path):
     os.mkdir(dataset_path)
 
@@ -66,8 +66,7 @@ github.download_files('https://github.com/richardclegg/FETA2/blob/master/data/ro
 networks_skewed.download_files(
     'https://networks.skewed.de/net/scotus_majority', dataset_path, specific_file='2007.csv', file_name='SCOTUS_majority.csv.zip')
 
-# soc-redditHyperlinks-body
-# soc-redditHyperlinks-title
+# soc-redditHyperlinks-body & soc-redditHyperlinks-title
 snap_stanford.download_files(
     'http://snap.stanford.edu/data/soc-RedditHyperlinks.html', dataset_path)
 

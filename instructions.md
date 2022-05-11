@@ -53,24 +53,20 @@ CollegeMsg http://snap.stanford.edu/data/CollegeMsg.html
     3 -> creation_time
 
 email-Eu-core-temporal http://snap.stanford.edu/data/email-Eu-core-temporal.html
-email-Eu-core-temporal.csv
-1 -> n1
-2 -> n2
-3 -> creation_time
+
+    email-Eu-core-temporal.csv
+    1 -> n1
+    2 -> n2
+    3 -> creation_time
+
 eu_procurements https://zenodo.org/record/3537986#.Xis4mC2ZNGV
 
     contracts.csv
-    1 -> n1
-    2 -> n2
-    5 -> creation_time
+    issuer_id_final -> n1
+    winner_id_final -> n2
+    date_dispatched -> creation_time
 
     (order by creation_time)
-
-facebook_data https://github.com/richardclegg/FETA2/tree/master/data
-facebook_data.txt
-1 -> n1
-2 -> n2
-3 -> creation_time
 
 facebook_wall https://networks.skewed.de/net/facebook_wall
 

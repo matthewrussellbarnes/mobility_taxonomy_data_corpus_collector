@@ -22,4 +22,4 @@ with open(file, 'r') as f:
             df.loc[len(df.index)] = [
                 n1, n2, creation_time]
 
-df.to_csv('./datasets/progamming_langaue_influence.csv', index=False, sep=' ')
+df.to_csv('./datasets/progamming_language_influence.csv', index=False, sep=' ')
