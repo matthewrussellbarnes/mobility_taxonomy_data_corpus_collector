@@ -8,7 +8,7 @@ dataset_path = os.path.join(os.path.dirname(os.getcwd()), 'datasets')
 
 
 def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None, creation_time_func=None):
-    print(extracted_fpath)
+    print(extracted_fpath, 'formatting')
 
     if not fname:
         fname = os.path.splitext(os.path.basename(extracted_fpath))[0]
@@ -33,7 +33,7 @@ def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None, cre
 
 
 def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, join_columns=None, creation_time_func=None):
-    print(fpath1, fpath2)
+    print(fpath1, fpath2, 'formatting')
 
     check_ext(fpath1)
     check_ext(fpath2)
@@ -60,7 +60,7 @@ def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, joi
 
 
 def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, delimiter=' ', fname=None):
-    print(extracted_fpath)
+    print(extracted_fpath, 'formatting')
 
     if not fname:
         fname = os.path.splitext(os.path.basename(extracted_fpath))[0]
@@ -89,7 +89,7 @@ def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, deli
 
 
 def extract_dataset(fpath, specific_file=None):
-    print(fpath)
+    print(fpath, 'extracting')
     [fname, _] = os.path.splitext('extr_' + os.path.basename(fpath))
 
     if fpath.endswith('zip'):
@@ -140,12 +140,17 @@ def convert_df_date_col_to_unix(df, col):
 
 def delete_extracted_files(extracted_fpath):
     if os.path.dirname(extracted_fpath) == dataset_path:
-        print('deleted', extracted_fpath)
-        os.remove(extracted_fpath)
+        if os.path.basename(extracted_fpath).startswith('extr'):
+            print(extracted_fpath, 'deleted')
+            os.remove(extracted_fpath)
+        else:
+            print(extracted_fpath, 'moved')
+            shutil.move(extracted_fpath, os.path.join(
+                dataset_path, 'archive', os.path.basename(extracted_fpath)))
     else:
         if os.path.dirname(os.path.dirname(extracted_fpath)) == dataset_path:
-            print('deleted', os.path.dirname(extracted_fpath))
+            print(os.path.dirname(extracted_fpath), 'deleted')
             shutil.rmtree(os.path.dirname(extracted_fpath))
         else:
-            print('deleted', os.path.dirname(os.path.dirname(extracted_fpath)))
+            print(os.path.dirname(os.path.dirname(extracted_fpath)), 'deleted')
             shutil.rmtree(os.path.dirname(os.path.dirname(extracted_fpath)))

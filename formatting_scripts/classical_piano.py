@@ -7,7 +7,7 @@ import utilities
 
 def format_dataset(extracted_fpath):
     fname = 'classical_piano.csv'
-    print(extracted_fpath)
+    print(extracted_fpath, 'formatting')
 
     n1_list = []
     n2_list = []

@@ -12,7 +12,7 @@ def format_dataset(extracted_fpath):
     n1_no = 0
     n2_no = 1
     ct_no = 3
-    print(extracted_fpath)
+    print(extracted_fpath, 'formatting')
 
     columns = ['n1', 'n2', 'creation_time']
 
