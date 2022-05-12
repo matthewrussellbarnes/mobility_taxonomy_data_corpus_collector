@@ -7,7 +7,7 @@ import pandas as pd
 dataset_path = os.path.join(os.path.dirname(os.getcwd()), 'datasets')
 
 
-def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None):
+def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None, creation_time_func=None):
     print(extracted_fpath)
 
     if not fname:
@@ -16,6 +16,9 @@ def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None):
     check_ext(extracted_fpath)
 
     fdf = pd.read_csv(extracted_fpath, delimiter=delimiter)
+
+    if creation_time_func:
+        fdf = creation_time_func(columns[2], fdf)
 
     check_columns_in_df(fdf, columns)
 
@@ -40,7 +43,9 @@ def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, joi
     f2df = pd.read_csv(fpath2, delimiter=delimiter, quotechar='"')
 
     jdf = f1df.join(f2df.set_index(join_columns[1]), on=join_columns[0])
-    jdf = creation_time_func(columns[2], jdf)
+
+    if creation_time_func:
+        jdf = creation_time_func(columns[2], jdf)
 
     check_columns_in_df(jdf, columns)
 

@@ -165,6 +165,18 @@ utilities.format_headerless_dataset(
     os.path.join(utilities.dataset_path, 'ucla_net.txt'), 3, 0, 1, 2, fname='ucla_net.csv', delimiter=' ')
 
 # us_air_traffic
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'us_air_traffic.csv.zip'), specific_file='edges.csv')
+
+
+def combine_year_month(col, df):
+    df[col] = df[' year'].astype('str').str.cat(
+        df[' month'].astype('str'), sep='-')
+    return df
+
+
+utilities.format_dataset(
+    fpath, columns=['# source', ' target', ' time'], fname='us_air_traffic.csv', delimiter=',', creation_time_func=combine_year_month)
 
 # wiki-talk-temporal
 fpath = utilities.extract_dataset(os.path.join(
