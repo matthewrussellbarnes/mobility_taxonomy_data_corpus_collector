@@ -30,9 +30,14 @@ for line in open(fpath.replace('edges.csv', 'nodes.csv'), "r"):
         nf.write(line)
 nf.close()
 
+
+def remove_unspecified_gdate(col, df):
+    return df.loc[df[col] != -1]
+
+
 utilities.format_dataset_2file(fpath, fpath.replace('edges.csv', 'nodes1.csv'),
                                columns=['# source', ' target', ' GYEAR'], join_columns=['# source', '# index'],
-                               fname='us_patents.csv', delimiter=',')
+                               fname='us_patents.csv', delimiter=',', creation_time_func=remove_unspecified_gdate)
 
 # classical_piano
 classical_piano.format_dataset(os.path.join(
@@ -80,6 +85,18 @@ utilities.format_headerless_dataset(
     os.path.join(utilities.dataset_path, 'route_net.txt'), 3, 0, 1, 2, fname='route_net.csv', delimiter=' ')
 
 # SCOTUS_majority
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'SCOTUS_majority.csv.zip'), specific_file='edges.csv')
+
+
+def only_year_in_lexid(col, df):
+    df[col] = df[col].str[:4]
+    return df
+
+
+utilities.format_dataset_2file(fpath, fpath.replace('edges.csv', 'nodes.csv'),
+                               columns=['# source', ' target', ' lexid'], join_columns=['# source', '# index'],
+                               fname='SCOTUS_majority.csv', delimiter=',', creation_time_func=only_year_in_lexid)
 
 # soc-redditHyperlinks-body
 utilities.format_dataset(

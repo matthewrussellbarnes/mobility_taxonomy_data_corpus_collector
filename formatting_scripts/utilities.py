@@ -29,7 +29,7 @@ def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None):
     print(fname, 'formatted')
 
 
-def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, join_columns=None):
+def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, join_columns=None, creation_time_func=None):
     print(fpath1, fpath2)
 
     check_ext(fpath1)
@@ -40,7 +40,7 @@ def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, joi
     f2df = pd.read_csv(fpath2, delimiter=delimiter, quotechar='"')
 
     jdf = f1df.join(f2df.set_index(join_columns[1]), on=join_columns[0])
-    jdf = jdf.loc[jdf[columns[2]] != -1]
+    jdf = creation_time_func(columns[2], jdf)
 
     check_columns_in_df(jdf, columns)
 
