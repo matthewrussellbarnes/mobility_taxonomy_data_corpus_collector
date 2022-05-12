@@ -19,6 +19,20 @@ utilities.format_dataset(
 # apollonius https://ajholanda.github.io/charnet/
 
 # us_patents
+fpath = utilities.extract_dataset(os.path.join(
+    utilities.dataset_path, 'us_patents.csv.zip'), specific_file='edges.csv')
+
+nf = open(fpath.replace('edges.csv', 'nodes1.csv'), "w")
+for line in open(fpath.replace('edges.csv', 'nodes.csv'), "r"):
+    if ',"' in line:
+        nf.write(line[:line.index(',"')] + '\n')
+    else:
+        nf.write(line)
+nf.close()
+
+utilities.format_dataset_2file(fpath, fpath.replace('edges.csv', 'nodes1.csv'),
+                               columns=['# source', ' target', ' GYEAR'], join_columns=['# source', '# index'],
+                               fname='us_patents.csv', delimiter=',')
 
 # classical_piano
 classical_piano.format_dataset(os.path.join(

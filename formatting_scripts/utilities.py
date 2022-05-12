@@ -16,21 +16,40 @@ def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None):
     check_ext(extracted_fpath)
 
     fdf = pd.read_csv(extracted_fpath, delimiter=delimiter)
-    if columns:
-        for column in columns:
-            if not column in list(fdf.columns):
-                raise Exception(f"Column '{column}' not in file")
-    else:
-        raise Exception(f"No columns chosen")
 
-    if '-' in str(fdf[columns[2]][0]):
-        fdf[columns[2]] = (pd.to_datetime(fdf[columns[2]]) -
-                           pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
+    check_columns_in_df(fdf, columns)
+
+    fdf[columns[2]] = convert_df_date_col_to_unix(fdf, columns[2])
 
     fdf.sort_values(by=columns[2]).to_csv(os.path.join(dataset_path, f"{fname}"), columns=columns, header=[
-        'n1', 'n2', 'creation_name'], index=False)
+        'n1', 'n2', 'creation_time'], index=False)
 
     delete_extracted_files(extracted_fpath)
+
+    print(fname, 'formatted')
+
+
+def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, join_columns=None):
+    print(fpath1, fpath2)
+
+    check_ext(fpath1)
+    check_ext(fpath2)
+
+    f1df = pd.read_csv(fpath1, delimiter=delimiter)
+
+    f2df = pd.read_csv(fpath2, delimiter=delimiter, quotechar='"')
+
+    jdf = f1df.join(f2df.set_index(join_columns[1]), on=join_columns[0])
+    jdf = jdf.loc[jdf[columns[2]] != -1]
+
+    check_columns_in_df(jdf, columns)
+
+    jdf[columns[2]] = convert_df_date_col_to_unix(jdf, columns[2])
+
+    jdf.sort_values(by=columns[2]).to_csv(os.path.join(dataset_path, f"{fname}"), columns=columns, header=[
+        'n1', 'n2', 'creation_time'], index=False)
+
+    delete_extracted_files(fpath1)
 
     print(fname, 'formatted')
 
@@ -52,9 +71,7 @@ def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, deli
 
     fdf = pd.read_csv(extracted_fpath, names=names, delimiter=delimiter)
 
-    if '-' in str(fdf[columns[2]][0]):
-        fdf[columns[2]] = (pd.to_datetime(fdf[columns[2]]) -
-                           pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
+    fdf[columns[2]] = convert_df_date_col_to_unix(fdf, columns[2])
 
     fdf.sort_values(by='creation_time').to_csv(os.path.join(
         dataset_path, f"{fname}"), columns=columns, header=columns, index=False)
@@ -93,6 +110,27 @@ def check_ext(fpath):
     fext = os.path.splitext(os.path.basename(fpath))[1]
     if not fext in ['.csv', '.txt', '.tsv']:
         raise Exception(f"Formatting failed due to non-usable ext {fext}")
+
+
+def check_columns_in_df(fdf, columns):
+    if columns:
+        for column in columns:
+            if not column in list(fdf.columns):
+                raise Exception(f"Column '{column}' not in file")
+    else:
+        raise Exception(f"No columns chosen")
+
+# -------------------------------------------
+
+
+def convert_df_date_col_to_unix(df, col):
+    if '-' in str(df[col][0]):
+        return (pd.to_datetime(df[col]) -
+                pd.Timestamp("1970-01-01")) // pd.Timedelta('1s')
+    else:
+        return df[col]
+
+# -------------------------------------------
 
 
 def delete_extracted_files(extracted_fpath):
