@@ -4,6 +4,7 @@ import utilities
 
 import classical_piano
 import reuters_terror_news
+import charnet
 
 if not os.path.exists(utilities.dataset_path):
     os.mkdir(utilities.dataset_path)
@@ -14,11 +15,15 @@ fpath = utilities.extract_dataset(os.path.join(
 utilities.format_dataset(
     fpath, columns=['# source', ' target', ' time'], fname='amazon_ratings.csv', delimiter=',')
 
-# apostles_bible https://ajholanda.github.io/charnet/
+# apostles_bible
+charnet.format_dataset(os.path.join(
+    utilities.dataset_path, 'acts.dat'), 'apostles_bible.csv', first_line=82)
 
-# apollonius https://ajholanda.github.io/charnet/
+# apollonius
+charnet.format_dataset(os.path.join(
+    utilities.dataset_path, 'apollonius.dat'), 'apollonius.csv', first_line=102)
 
-# us_patents
+# cit_us_patents
 fpath = utilities.extract_dataset(os.path.join(
     utilities.dataset_path, 'us_patents.csv.zip'), specific_file='edges.csv')
 
@@ -37,7 +42,7 @@ def remove_unspecified_gdate(col, df):
 
 utilities.format_dataset_2file(fpath, fpath.replace('edges.csv', 'nodes1.csv'),
                                columns=['# source', ' target', ' GYEAR'], join_columns=['# source', '# index'],
-                               fname='us_patents.csv', delimiter=',', creation_time_func=remove_unspecified_gdate)
+#                                fname='cit_us_patents.csv', delimiter=',', creation_time_func=remove_unspecified_gdate)
 
 # classical_piano
 classical_piano.format_dataset(os.path.join(
@@ -69,7 +74,9 @@ utilities.format_dataset(
 
 # lotr https://github.com/IngoScholtes/kdd2018-tutorial/blob/master/code/1_4_temporal_networks.ipynb
 
-# luke_bible https://ajholanda.github.io/charnet/
+# luke_bible
+charnet.format_dataset(os.path.join(
+    utilities.dataset_path, 'luke.dat'), 'luke_bible.csv', first_line=82)
 
 # phd_exchange
 

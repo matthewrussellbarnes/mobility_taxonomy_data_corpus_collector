@@ -13,9 +13,13 @@ if not os.path.exists(dataset_path):
 networks_skewed.download_files(
     'https://networks.skewed.de/net/amazon_ratings', dataset_path)
 
-# apostles_bible https://ajholanda.github.io/charnet/
+# apostles_bible
+github.download_files(
+    'https://github.com/aholanda/charnet/blob/master/data/acts.dat', dataset_path)
 
-# apollonius https://ajholanda.github.io/charnet/
+# apollonius
+github.download_files(
+    'https://github.com/aholanda/charnet/blob/master/data/apollonius.dat', dataset_path)
 
 # cit_us_patents
 networks_skewed.download_files(
@@ -43,7 +47,9 @@ networks_skewed.download_files(
 
 # lotr https://github.com/IngoScholtes/kdd2018-tutorial/blob/master/code/1_4_temporal_networks.ipynb
 
-# luke_bible https://ajholanda.github.io/charnet/
+# luke_bible
+github.download_files('https://github.com/aholanda/charnet/blob/master/data/luke.dat',
+                      dataset_path)
 
 # phd_exchange
 github.download_files('https://github.com/taylordr/Temporal_Eigenvector_Centrality/blob/master/Temporal_Eigenvector_Centrality/PhD%20Exchange%20Network%20Data/PhD_exchange.txt',

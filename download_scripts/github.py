@@ -1,7 +1,4 @@
 import utilities
-import os
-
-import wget
 
 
 def download_files(my_url, dest_folder_path):
