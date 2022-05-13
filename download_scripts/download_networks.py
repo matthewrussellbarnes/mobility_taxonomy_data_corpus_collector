@@ -55,7 +55,6 @@ github.download_files('https://github.com/aholanda/charnet/blob/master/data/luke
 github.download_files('https://github.com/taylordr/Temporal_Eigenvector_Centrality/blob/master/Temporal_Eigenvector_Centrality/PhD%20Exchange%20Network%20Data/PhD_exchange.txt',
                       dataset_path)
 
-
 # programming_language_influence
 utilities.wget_links(['https://royalsocietypublishing.org/action/downloadSupplement?doi=10.1098%2Frsif.2015.0249&file=rsif20150249supp1.pdf'],
                      dataset_path, file_name='programming_language_influence.pdf')

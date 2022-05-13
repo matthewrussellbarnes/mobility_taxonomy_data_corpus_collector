@@ -5,6 +5,9 @@ import utilities
 
 
 def format_dataset(extracted_fpath):
+    if not extracted_fpath:
+        return
+
     delimiter = ' '
     fname = 'reuters_terror_news.csv'
 
@@ -21,8 +24,13 @@ def format_dataset(extracted_fpath):
     names[n2_no] = columns[1]
     names[ct_no] = columns[2]
 
-    fdf = pd.read_csv(extracted_fpath, names=names,
-                      delimiter=delimiter, skipinitialspace=True, skiprows=13311)
+    try:
+        fdf = pd.read_csv(extracted_fpath, names=names,
+                          delimiter=delimiter, skipinitialspace=True, skiprows=13311)
+    except Exception as e:
+        print(e, '\n')
+        return
+
     fdf[columns[2]] = [ct.replace('[', '').replace(']', '')
                        for ct in fdf[columns[2]]]
     fdf.sort_values(by='creation_time').to_csv(os.path.join(
@@ -30,4 +38,4 @@ def format_dataset(extracted_fpath):
 
     utilities.delete_extracted_files(extracted_fpath)
 
-    print(fname, 'fomatted')
+    print(fname, 'formatted \n')

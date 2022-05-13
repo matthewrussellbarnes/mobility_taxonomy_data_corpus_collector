@@ -8,6 +8,9 @@ dataset_path = os.path.join(os.path.dirname(os.getcwd()), 'datasets')
 
 
 def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None, creation_time_func=None):
+    if not extracted_fpath:
+        return
+
     print(extracted_fpath, 'formatting')
 
     if not fname:
@@ -15,7 +18,11 @@ def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None, cre
 
     check_ext(extracted_fpath)
 
-    fdf = pd.read_csv(extracted_fpath, delimiter=delimiter)
+    try:
+        fdf = pd.read_csv(extracted_fpath, delimiter=delimiter)
+    except Exception as e:
+        print(e, '\n')
+        return
 
     if creation_time_func:
         fdf = creation_time_func(columns[2], fdf)
@@ -29,18 +36,29 @@ def format_dataset(extracted_fpath, delimiter=' ', columns=None, fname=None, cre
 
     delete_extracted_files(extracted_fpath)
 
-    print(fname, 'formatted')
+    print(fname, 'formatted \n')
 
 
 def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, join_columns=None, creation_time_func=None):
+    if not fpath1 or not fpath2:
+        return
+
     print(fpath1, fpath2, 'formatting')
 
     check_ext(fpath1)
     check_ext(fpath2)
 
-    f1df = pd.read_csv(fpath1, delimiter=delimiter)
+    try:
+        f1df = pd.read_csv(fpath1, delimiter=delimiter)
+    except Exception as e:
+        print(e, '\n')
+        return
 
-    f2df = pd.read_csv(fpath2, delimiter=delimiter, quotechar='"')
+    try:
+        f2df = pd.read_csv(fpath2, delimiter=delimiter, quotechar='"')
+    except Exception as e:
+        print(e, '\n')
+        return
 
     jdf = f1df.join(f2df.set_index(join_columns[1]), on=join_columns[0])
 
@@ -56,10 +74,13 @@ def format_dataset_2file(fpath1, fpath2, fname, delimiter=' ', columns=None, joi
 
     delete_extracted_files(fpath1)
 
-    print(fname, 'formatted')
+    print(fname, 'formatted \n')
 
 
 def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, delimiter=' ', fname=None):
+    if not extracted_fpath:
+        return
+
     print(extracted_fpath, 'formatting')
 
     if not fname:
@@ -74,7 +95,11 @@ def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, deli
     names[n2_no] = columns[1]
     names[ct_no] = columns[2]
 
-    fdf = pd.read_csv(extracted_fpath, names=names, delimiter=delimiter)
+    try:
+        fdf = pd.read_csv(extracted_fpath, names=names, delimiter=delimiter)
+    except Exception as e:
+        print(e, '\n')
+        return
 
     fdf[columns[2]] = convert_df_date_col_to_unix(fdf, columns[2])
 
@@ -83,7 +108,7 @@ def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, deli
 
     delete_extracted_files(extracted_fpath)
 
-    print(fname, 'formatted')
+    print(fname, 'formatted \n')
 
 #  ---------------------------------------
 
@@ -93,12 +118,21 @@ def extract_dataset(fpath, specific_file=None):
     [fname, _] = os.path.splitext('extr_' + os.path.basename(fpath))
 
     if fpath.endswith('zip'):
-        with zipfile.ZipFile(fpath, 'r') as zip_ref:
-            zip_ref.extractall(os.path.join(dataset_path, fname))
+        try:
+            with zipfile.ZipFile(fpath, 'r') as zip_ref:
+                zip_ref.extractall(os.path.join(dataset_path, fname))
+        except Exception as e:
+            print(e, '\n')
+            return
+
     elif fpath.endswith('gz'):
-        with gzip.open(fpath, 'rb') as f_in:
-            with open(os.path.join(dataset_path, fname), 'wb') as f_out:
-                shutil.copyfileobj(f_in, f_out)
+        try:
+            with gzip.open(fpath, 'rb') as f_in:
+                with open(os.path.join(dataset_path, fname), 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+        except Exception as e:
+            print(e, '\n')
+            return
 
     if not os.path.exists(os.path.join(dataset_path, 'archive')):
         os.mkdir(os.path.join(dataset_path, 'archive'))
@@ -114,16 +148,16 @@ def extract_dataset(fpath, specific_file=None):
 def check_ext(fpath):
     fext = os.path.splitext(os.path.basename(fpath))[1]
     if not fext in ['.csv', '.txt', '.tsv']:
-        raise Exception(f"Formatting failed due to non-usable ext {fext}")
+        print(f"Formatting failed due to non-usable ext {fext}")
 
 
 def check_columns_in_df(fdf, columns):
     if columns:
         for column in columns:
             if not column in list(fdf.columns):
-                raise Exception(f"Column '{column}' not in file")
+                print(f"Column '{column}' not in file")
     else:
-        raise Exception(f"No columns chosen")
+        print(f"No columns chosen")
 
 # -------------------------------------------
 

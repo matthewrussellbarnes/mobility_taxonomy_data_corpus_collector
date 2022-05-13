@@ -27,22 +27,23 @@ charnet.format_dataset(os.path.join(
 fpath = utilities.extract_dataset(os.path.join(
     utilities.dataset_path, 'us_patents.csv.zip'), specific_file='edges.csv')
 
-nf = open(fpath.replace('edges.csv', 'nodes1.csv'), "w")
-for line in open(fpath.replace('edges.csv', 'nodes.csv'), "r"):
-    if ',"' in line:
-        nf.write(line[:line.index(',"')] + '\n')
-    else:
-        nf.write(line)
-nf.close()
-
 
 def remove_unspecified_gdate(col, df):
     return df.loc[df[col] != -1]
 
 
-utilities.format_dataset_2file(fpath, fpath.replace('edges.csv', 'nodes1.csv'),
-                               columns=['# source', ' target', ' GYEAR'], join_columns=['# source', '# index'],
-#                                fname='cit_us_patents.csv', delimiter=',', creation_time_func=remove_unspecified_gdate)
+if fpath:
+    nf = open(fpath.replace('edges.csv', 'nodes1.csv'), "w")
+    for line in open(fpath.replace('edges.csv', 'nodes.csv'), "r"):
+        if ',"' in line:
+            nf.write(line[:line.index(',"')] + '\n')
+        else:
+            nf.write(line)
+    nf.close()
+
+    utilities.format_dataset_2file(fpath, fpath.replace('edges.csv', 'nodes1.csv'),
+                                   columns=['# source', ' target', ' GYEAR'], join_columns=['# source', '# index'],
+                                   fname='cit_us_patents.csv', delimiter=',', creation_time_func=remove_unspecified_gdate)
 
 # classical_piano
 classical_piano.format_dataset(os.path.join(
@@ -101,9 +102,10 @@ def only_year_in_lexid(col, df):
     return df
 
 
-utilities.format_dataset_2file(fpath, fpath.replace('edges.csv', 'nodes.csv'),
-                               columns=['# source', ' target', ' lexid'], join_columns=['# source', '# index'],
-                               fname='SCOTUS_majority.csv', delimiter=',', creation_time_func=only_year_in_lexid)
+if fpath:
+    utilities.format_dataset_2file(fpath, fpath.replace('edges.csv', 'nodes.csv'),
+                                   columns=['# source', ' target', ' lexid'], join_columns=['# source', '# index'],
+                                   fname='SCOTUS_majority.csv', delimiter=',', creation_time_func=only_year_in_lexid)
 
 # soc-redditHyperlinks-body
 utilities.format_dataset(
