@@ -73,7 +73,9 @@ fpath = utilities.extract_dataset(os.path.join(
 utilities.format_dataset(
     fpath, columns=['# source', ' target', ' time'], fname='facebook_wall.csv', delimiter=',')
 
-# lotr https://github.com/IngoScholtes/kdd2018-tutorial/blob/master/code/1_4_temporal_networks.ipynb
+# lotr
+utilities.format_headerless_dataset(os.path.join(
+    utilities.dataset_path, 'lotr.csv'), 3, 0, 1, 2, delimiter=',')
 
 # luke_bible
 charnet.format_dataset(os.path.join(

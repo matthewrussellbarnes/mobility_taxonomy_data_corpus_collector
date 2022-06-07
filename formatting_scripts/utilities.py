@@ -84,7 +84,7 @@ def format_headerless_dataset(extracted_fpath, col_no, n1_no, n2_no, ct_no, deli
     print(extracted_fpath, 'formatting')
 
     if not fname:
-        fname = os.path.splitext(os.path.basename(extracted_fpath))[0]
+        fname = os.path.splitext(os.path.basename(extracted_fpath))[0] + '.csv'
 
     check_ext(extracted_fpath)
 

@@ -45,7 +45,9 @@ utilities.wget_links(['https://zenodo.org/record/3537986/files/data.zip?download
 networks_skewed.download_files(
     'https://networks.skewed.de/net/facebook_wall', dataset_path)
 
-# lotr https://github.com/IngoScholtes/kdd2018-tutorial/blob/master/code/1_4_temporal_networks.ipynb
+# lotr
+github.download_files(
+    'https://github.com/Raphtory/Data/blob/main/lotr.csv', dataset_path)
 
 # luke_bible
 github.download_files('https://github.com/aholanda/charnet/blob/master/data/luke.dat',
